@@ -1,21 +1,52 @@
 <template>
- <div class="container">
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Welcome from Bootstrap</h1>
-        <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-        <p><a class="btn btn-primary btn-lg" href="http://www.bootcss.com/" role="button" target="_blank">Learn more <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span></a></p>
-      </div>
+    <div class="message">
+      <Message :show.sync="msgShow" :type="msgType" :msg="msg"/>
     </div>
-  </div>
 </template>
 
 <script>
 export default {
   name: 'Home',
-  data () {
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: '', // 消息
+      msgType: '', // 消息类型
+      msgShow: false // 是否显示消息，默认不显示
+    }
+  },
+   beforeRouteEnter(to, from, next) {
+    const fromName = from.name
+    const logout = to.params.logout
+
+    next(vm => {
+      if (vm.$store.state.auth) {
+        switch (fromName) {
+          case 'Register':
+            vm.showMsg('注册成功')
+            break
+        }
+      }else if (logout) {
+        vm.showMsg('操作成功')
+      }
+    })
+  },
+  computed: {
+    auth() {
+      return this.$store.state.auth
+    }
+  },
+  watch: {
+    auth(value) {
+      if (!value) {
+        this.showMsg('操作成功')
+      }
+    }
+  },
+  methods: {
+    showMsg(msg, type = 'success') {
+      this.msg = msg
+      this.msgType = type
+      this.msgShow = true
     }
   }
 }
