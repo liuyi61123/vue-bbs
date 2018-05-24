@@ -1,7 +1,7 @@
 {
-  "name": "vuejs",
+  "name": "vue-bbs",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "A Vue.js bbs demo",
   "author": "liuyi <475793342@qq.com>",
   "private": true,
   "scripts": {

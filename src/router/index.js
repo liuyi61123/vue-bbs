@@ -19,6 +19,19 @@ const routes = [
     name: 'Login',
     component: () => import('@/views/auth/Login')
   },
+  //用户相关路由
+  {
+    path: '/users/1/edit',
+    component: () => import('@/views/users/Edit.vue'),
+    children: [
+      {
+        path: '',
+        name: 'EditProfile',
+        component: () => import('@/views/users/Profile.vue'),
+        meta: { auth: true }
+      }
+    ]
+  },
   // 其他未配置的路由都跳转到首页
   {
     path: '*',
@@ -30,6 +43,7 @@ const routes = [
 
 const router = new Router({
   mode: 'history',
+  linkExactActiveClass: 'active',
   routes
 })
 
@@ -37,7 +51,10 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const auth = router.app.$options.store.state.auth
 
-  if (auth && to.path.indexOf('/auth/') !== -1) {
+  if (
+    (auth && to.path.indexOf('/auth/') !== -1) ||
+    (!auth && to.meta.auth)
+  ) {
     next('/')
   } else {
     next()

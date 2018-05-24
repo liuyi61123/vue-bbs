@@ -1,6 +1,6 @@
 # vuejs
 
-> This is a my Vue.js demo
+> This is a my Vue.js bbs demo
 
 ## Build Setup
 
