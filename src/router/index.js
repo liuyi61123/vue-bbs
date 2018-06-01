@@ -29,9 +29,22 @@ const routes = [
         name: 'EditProfile',
         component: () => import('@/views/users/Profile.vue'),
         meta: { auth: true }
+      },
+      {
+        path: '/users/1/edit_avatar',
+        name: 'Avatar',
+        component: () => import('@/views/users/Avatar.vue'),
+        meta: { auth: true }
+      },
+      {
+        path: '/users/1/edit_password',
+        name: 'Password',
+        component: () => import('@/views/users/Password.vue'),
+        meta: { auth: true }
       }
     ]
   },
+  //文章相关路由
   // 其他未配置的路由都跳转到首页
   {
     path: '*',
@@ -49,7 +62,11 @@ const router = new Router({
 
 // 全局前置守卫
 router.beforeEach((to, from, next) => {
-  const auth = router.app.$options.store.state.auth
+  const app = router.app
+  const store = app.$options.store
+  const auth = store.state.auth
+
+  app.$message.hide()
 
   if (
     (auth && to.path.indexOf('/auth/') !== -1) ||
