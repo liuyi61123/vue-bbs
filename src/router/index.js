@@ -9,6 +9,24 @@ const routes = [
     name: 'Home',
     component: () => import('@/views/Home')
   },
+   // Column
+   {
+    path: '/:user',
+    name: 'Column',
+    component: () => import('@/views/articles/Column'),
+    children: [
+      {
+        path: '',
+        name: 'Column',
+        component: () => import('@/views/articles/List.vue')
+      },
+      {
+        path: '/articles/:articleId/content',
+        name: 'Content',
+        component: () => import('@/views/articles/Content.vue')
+      }
+    ]
+  },
   {
     path: '/auth/register',
     name: 'Register',
@@ -50,12 +68,6 @@ const routes = [
     name: 'Create',
     component: () => import('@/views/articles/Create'),
     meta: { auth: true }
-  },
-   //文章内容
-   {
-    path: '/articles/:articleId/content',
-    name: 'Content',
-    component: () => import('@/views/articles/Content')
   },
   // 编辑文章
   {
