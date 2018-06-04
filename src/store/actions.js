@@ -161,6 +161,22 @@ export const comment = ({ commit, state }, { articleId, comment, commentId }) =>
             content,
             date
           })
+        }else{
+          for (let comment of comments) {
+            if (parseInt(comment.commentId) === parseInt(commentId)) {
+              comment.content = content
+              break
+            }
+          }
+        }
+      }else{
+        for (let comment of comments) { // 不存在评论内容时
+          // 找到对应的评论时
+          if (parseInt(comment.commentId) === parseInt(commentId)) {
+            // 删除这条评论
+            comments.splice(comments.indexOf(comment), 1)
+            break
+          }
         }
       }
 
